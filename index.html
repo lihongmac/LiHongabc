@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <title>李红</title>
+    <link rel="short icon" href="Resource/icon.png">
+    <link rel="stylesheet" href="ExternalStyle.css">
+
+    <style>
+        .head_div{
+            text-align: center;
+        }
+        .head_div img{
+            margin-top: 50px;
+        }
+        .innner_div{
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            width: 90%;
+            margin: 0 auto;
+            background: white;
+            height: 100px;
+            margin-top: 30px;
+        }
+        .innner_div div{
+            height: 50px;
+        }
+        .innner_div span{
+            padding-left: 15px;
+            font-size: 20px;
+            line-height: 50px;
+        }
+        input{
+            outline: medium;
+            background-color: transparent;
+            border: 0;
+        }
+        .login_div{
+            height: 50px;
+            background: rgb(36,92,161);
+            width: 90%;
+            margin: 0 auto;
+            border-radius: 20px;
+            text-align: center;
+        }
+        .login_div input{
+            font-size: 20px;
+            color: white;
+            line-height: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <span>登陆</span>
+</header>
+
+<div class="head_div">
+    <img src="Resource/head.png" alt="">
+</div>
+
+
+
+<form action="">
+    <div class="innner_div">
+
+        <div style="border-bottom: 1px solid #dddddd">
+            <span>用户名:</span>
+            <input id="account" type="text">
+        </div>
+
+        <div>
+            <span>密码:</span>
+            <input id="pwd" type="password">
+        </div>
+
+    </div>
+
+
+    <div class="login_div">
+        <input id="i_btn" type="button" value="登录" >
+    </div>
+</form>
+
+
+<script>
+
+    var btn = document.getElementById("i_btn");
+    btn.onclick = function () {
+        var userName = encodeURIComponent(document.getElementById("account").value);
+        var password = encodeURIComponent(document.getElementById("pwd").value);
+
+        //第一步:创建一个网络请求（http),去服务端要数据，接收服务端数据
+        var xhr = new XMLHttpRequest();
+        //第二步：与服务端建立连接（get/post）请求方式，连接哪个服务器，用连接这个服务器的那那个接口
+        xhr.open('post','https://mockapi.eolinker.com/2ZhGVxjacb39010e6753bd9c02ee803e6e3bfeab6e8007c/login');
+        //设置请求头，告诉服务器咱们传递过去的数据是以表单的形式传递过去的
+        xhr.setRequestHeader("content-type","application/x-www-form-urlencoded");
+        // 第三步：向服务器发送请求（传参）
+        var str ="username="+userName+"&pwd="+password;
+        xhr.send(str);
+        // 第四步：接收服务器返回的数据
+        xhr.onreadystatechange = function () {
+            //xhr.readyState == 4 代表数据请求完成
+            //xhr.status == 200 代表数据返回成功
+            if(xhr.readyState==4 && xhr.status==200) {
+                //responseText里面包含了服务端返回的数据
+                var responseData = JSON.parse(xhr.responseText);
+                if (responseData.data=="登录成功"){
+                    location.href="DropletSevice.html";
+                } else {
+                    alert(str);
+                }
+            }
+        }
+
+    }
+
+
+</script>
+
+</body>
+</html>
+鹤飞
